@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\HashPayerController;
 
 class HashController extends Controller
@@ -16,8 +15,6 @@ class HashController extends Controller
 
         $this->request = $request;
         $this->msg= new MessageController;
-        $this->log= new LogController;
-        $this->keyOperation=time();
     }
 
      /*
@@ -45,7 +42,6 @@ class HashController extends Controller
                                 ], 403);
             return $decrypted_text;
         } catch (\Exception $e) {
-            $this->log->logDB($this->keyOperation,"HashPayerController","descrypt  failed",$e);
             return $this->msg->msgError($e);
         }
     }
@@ -74,7 +70,6 @@ class HashController extends Controller
                                 ], 403);
             return (base64_encode($encrypted_text));
         } catch (\Exception $e) {
-            $this->log->logDB($this->keyOperation,"HashPayerController","encrypt text failed !",$e);
             return $this->msg->msgError($e);
         }
     }
